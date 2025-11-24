@@ -8,11 +8,11 @@ public class Renderer {
                 if (entity == null) {
                     System.out.print("⬜");
                 } else if (entity instanceof Grass) {
-                    System.out.print("🌿");
+                   System.out.print("🌿");
                 } else if (entity instanceof Herbivore) {
-                    System.out.print("🐇");
+                    System.out.print("🐰");
                 } else if (entity instanceof Rock) {
-                    System.out.print("# ");
+                    System.out.print("🧱");
                 } else if (entity instanceof Tree) {
                     System.out.print("🌳");
                 } else if (entity instanceof Predator) {
