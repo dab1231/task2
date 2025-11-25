@@ -38,4 +38,20 @@ public class Map {
     public boolean isOccupied(Coordinate coordinate){
         return entities.containsKey(coordinate);
     }
+
+    public void moveEntity(Coordinate from, Coordinate to){
+        Entity entity = entities.get(from);
+        if(entity == null) {
+            throw new IllegalArgumentException("No entity at the specified coordinate");
+        }
+        if(to.getX() < 0 || to.getX() >= width 
+            || to.getY() < 0 || to.getY() >= height){
+            throw new IllegalArgumentException("Target coordinate is occupied ");
+        }
+        entities.remove(from);
+        entities.remove(to);
+        entities.put(to, entity);
+        entity.setPosition(to.getX(), to.getY());
+            
+    }
 }
