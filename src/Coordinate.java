@@ -11,6 +11,7 @@ public class Coordinate {
         return yPos;
     }
 
+
     public Coordinate(int x, int y){
         this.xPos = x;
         this.yPos = y;
