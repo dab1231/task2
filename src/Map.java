@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Map {
     private int width;
@@ -16,6 +18,16 @@ public class Map {
     }
     public int getHeight() {
         return height;
+    }
+
+    public List<Creature> getAllCreatures(){
+        List<Creature> creatures = new ArrayList<Creature>();
+        for(Entity entity : entities.values()){
+            if(entity instanceof Creature){
+                creatures.add((Creature) entity);
+            }
+        }
+        return creatures;
     }
 
     public void addEntity(Coordinate coordinate, Entity entity){
