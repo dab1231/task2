@@ -1,53 +1,44 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Predator extends Creature {
     private int attackPower;
 
     public Predator() {
-        this.health = 10;
-        this.speed = 2;
-        this.attackPower = 3; 
+        setHealth(10);
+        setSpeed(2);
+        attackPower = 3;
     }
 
     public Predator(int health, int speed, int attackPower) {
-        this.health = health;
-        this.speed = speed;
+        this.setHealth(health);
+        this.setSpeed(speed);
         this.attackPower = attackPower;
     }
 
     @Override
     public void makeMove(Map map) {
+        PathFinder pathFinder = new PathFinder();
         Coordinate currentPos = new Coordinate(this.getXPos(), this.getYPos());
 
-        Coordinate up = new Coordinate(currentPos.getX(), currentPos.getY() + 1);
-        Coordinate down = new Coordinate(currentPos.getX(), currentPos.getY() - 1);
-        Coordinate left = new Coordinate(currentPos.getX() - 1, currentPos.getY());
-        Coordinate right = new Coordinate(currentPos.getX() + 1, currentPos.getY());
+        Coordinate nearestTarget = pathFinder.findNearestTarget(map, currentPos, Herbivore.class);
+        if (nearestTarget != null) {
+            List<Coordinate> path = pathFinder.findPath(currentPos, nearestTarget, map);
+            if (path != null) {
 
-        List<Coordinate> possibleMoves = new ArrayList<>();
+                for(int i = 1; i < Math.min(getSpeed() + 1, path.size()); i++) {
+                    Coordinate target = path.get(i);
+                    Entity entity = map.getEntity(target);
 
-        if(!(map.isOccupied(up)) && up.getY() < map.getHeight()){
-            possibleMoves.add(up);
+                    if(entity instanceof Herbivore herbivore) {
+                        herbivore.setHealth(herbivore.getHealth() - attackPower);
+                        if(herbivore.getHealth() <= 0) {
+                            map.removeEntity(target);
+                        }
+                    }
+                    map.moveEntity(currentPos, target);
+                    currentPos  = target;
+                }
+            }
         }
-        if(!(map.isOccupied(down)) && down.getY() >= 0){
-            possibleMoves.add(down);
-        }
-        if(!(map.isOccupied(left)) && left.getX() >= 0){
-            possibleMoves.add(left);
-        }
-        if(!(map.isOccupied(right)) && right.getX() < map.getWidth()){
-            possibleMoves.add(right);
-        }
-
-        if(possibleMoves.isEmpty()){
-            return; 
-        }
-        
-        Random rand = new Random();
-        int point = rand.nextInt(possibleMoves.size());
-        Coordinate moveTo = possibleMoves.get(point);
-        map.moveEntity(currentPos, moveTo);
     }
 }
