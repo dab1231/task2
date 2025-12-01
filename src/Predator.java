@@ -16,28 +16,17 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove(Map map) {
-        PathFinder pathFinder = new PathFinder();
-        Coordinate currentPos = new Coordinate(this.getXPos(), this.getYPos());
+    protected Class<?> getTargetType() {
+        return Herbivore.class;
+    }
 
-        Coordinate nearestTarget = pathFinder.findNearestTarget(map, currentPos, Herbivore.class);
-        if (nearestTarget != null) {
-            List<Coordinate> path = pathFinder.findPath(currentPos, nearestTarget, map);
-            if (path != null) {
-
-                for(int i = 1; i < Math.min(getSpeed() + 1, path.size()); i++) {
-                    Coordinate target = path.get(i);
-                    Entity entity = map.getEntity(target);
-
-                    if(entity instanceof Herbivore herbivore) {
-                        herbivore.setHealth(herbivore.getHealth() - attackPower);
-                        if(herbivore.getHealth() <= 0) {
-                            map.removeEntity(target);
-                        }
-                    }
-                    map.moveEntity(currentPos, target);
-                    currentPos  = target;
-                }
+    @Override
+    protected void onTargetReached(Map map, Coordinate target) {
+        Entity entity = map.getEntity(target);
+        if (entity instanceof Herbivore herbivore) {
+            herbivore.setHealth(herbivore.getHealth() - attackPower);
+            if (herbivore.getHealth() <= 0) {
+                map.removeEntity(target);
             }
         }
     }

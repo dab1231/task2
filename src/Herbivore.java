@@ -3,8 +3,8 @@ import java.util.List;
 public class Herbivore extends Creature {
 
     public Herbivore() {
-        this.setHealth(5);
-        this.setSpeed(1);
+        this.setHealth(10);
+        this.setSpeed(2);
     }
 
     public Herbivore(int health, int speed){
@@ -13,29 +13,14 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void makeMove(Map map) {
-        PathFinder pathFinder = new PathFinder();
-        Coordinate currentPos = new Coordinate(this.getXPos(), this.getYPos());
+    protected Class<?> getTargetType(){
+        return Grass.class;
+    }
 
-        Coordinate nearestTarget = pathFinder.findNearestTarget(map, currentPos, Grass.class);
-        if (nearestTarget != null) {
-            List<Coordinate> path = pathFinder.findPath(currentPos, nearestTarget, map);
-            if (path != null) {
-                for(int i = 1; i < Math.min(getSpeed() + 1, path.size()); i++) {
-                    Coordinate target = path.get(i);
-
-                    if(map.getEntity(target) instanceof Grass) {
-                        map.removeEntity(target);
-                    }
-
-                    map.moveEntity(currentPos, target);
-                    currentPos = target;
-
-                    if(target.equals(nearestTarget)) {
-                        break;
-                    }
-                }
-            }
+    @Override
+    protected void onTargetReached(Map map, Coordinate target){
+        if(map.getEntity(target) instanceof Grass){
+            map.removeEntity(target);
         }
     }
 }
