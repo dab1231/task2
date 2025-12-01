@@ -6,7 +6,7 @@ public class InitMapActions implements Action {
     private final int grassCount;
     private final int rockCount;
     private final int treeCount;
-    private Random random = new Random();
+    private static Random random = new Random();
 
     public InitMapActions(int herbivoreCount, int predatorCount, int grassCount, int rockCount, int treeCount) {
         this.herbivoreCount = herbivoreCount;
@@ -21,7 +21,7 @@ public class InitMapActions implements Action {
         map.addEntity(coordinate, entity);
     }
 
-    private Coordinate getRandomFreeCoordinate(Map map) {
+    public static Coordinate getRandomFreeCoordinate(Map map) {
         Coordinate coordinate;
         do {
             coordinate = new Coordinate(

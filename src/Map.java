@@ -30,6 +30,16 @@ public class Map {
         return creatures;
     }
 
+    public int getGrassCount(){
+        int count = 0;
+        for(Entity entity : entities.values()){
+            if(entity instanceof Grass){
+                count+=1;
+            }
+        }
+        return count;
+    }
+
     public void addEntity(Coordinate coordinate, Entity entity){
         if(coordinate.getX() < 0 || coordinate.getX() >= width 
             || coordinate.getY() < 0 || coordinate.getY() >= height || isOccupied(coordinate)){

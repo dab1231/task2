@@ -16,7 +16,7 @@ public class Simulation {
 
     public Simulation(int width, int height, int herbivoreCount, int predatorCount,
             int grassCount, int rockCount, int treeCount) {
-        this.map = new Map(width, height); // БЕЗ типа!
+        this.map = new Map(width, height); 
         this.renderer = new Renderer();
         this.turnCounter = 0;
 
@@ -26,8 +26,8 @@ public class Simulation {
 
         this.turnActions = new ArrayList<>();
         turnActions.add(new MoveCreaturesAction());
+        turnActions.add(new SpawnGrassAction());
 
-        // Выполнить инициализацию сразу
         for (Action action : initActions) {
             action.execute(map);
         }
@@ -54,7 +54,6 @@ public class Simulation {
     }
 
     public void pauseSimulation() {
-        // Приостановить цикл (опционально, сложнее)
     }
 
     public static void main(String[] args) {

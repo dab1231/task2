@@ -27,7 +27,7 @@ public abstract class Creature extends Entity {
         Coordinate nearestTarget = pathFinder.findNearestTarget(map, currentPos, getTargetType());
         if (nearestTarget != null) {
             List<Coordinate> path = pathFinder.findPath(currentPos, nearestTarget, map);
-            if (path != null) {
+            if (!path.isEmpty()) {
                 for(int i = 1; i < Math.min(getSpeed() + 1, path.size()); i++) {
                     Coordinate target = path.get(i);
                     

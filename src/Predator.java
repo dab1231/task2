@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Predator extends Creature {
     private int attackPower;
 
