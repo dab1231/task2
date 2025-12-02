@@ -73,10 +73,10 @@ public class PathFinder {
             for(int x = 0; x < map.getWidth(); x++){
                 Entity entity = map.getEntity(new Coordinate(x, y));         
                 if(targetClass.isInstance(entity)){
-                    path = Math.abs(start.getX() - entity.getXPos()) + Math.abs(start.getY() - entity.getYPos());
+                    path = Math.abs(start.getX() - x) + Math.abs(start.getY() - y);
                     if(path < minPath) { 
                         minPath = path; 
-                        coordinateMinPath = new Coordinate(entity.getXPos(), entity.getYPos());
+                        coordinateMinPath = new Coordinate(x, y);
                     }
                 }
             }

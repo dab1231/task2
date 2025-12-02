@@ -2,7 +2,7 @@ public class Herbivore extends Creature {
 
     public Herbivore() {
         this.setHealth(10);
-        this.setSpeed(2);
+        this.setSpeed(1);
     }
 
     public Herbivore(int health, int speed){
